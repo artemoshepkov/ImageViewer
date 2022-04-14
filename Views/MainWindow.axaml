@@ -1,0 +1,66 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Gallery.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:Gallery.Models;assembly=Gallery"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="Gallery.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Gallery"
+        Width="1000" Height="600"
+        xmlns:ext="clr-namespace:Gallery;assembly=Gallery">
+  
+  
+  <SplitView IsPaneOpen="True"
+           DisplayMode="Inline"
+           OpenPaneLength="250">
+    
+    
+    <SplitView.Pane>
+
+      <TreeView SelectionChanged="OnTreeSelectionChanged" Items="{Binding DirList}">
+        <TreeView.DataTemplates>
+
+          <TreeDataTemplate DataType="models:MyDir" ItemsSource="{Binding SubDirs}">
+            <TextBlock Text="{Binding Name}"/>
+          </TreeDataTemplate>
+          <DataTemplate DataType="models:MyImage">
+            <TextBlock Text="{Binding Name}"/>
+          </DataTemplate>
+
+        </TreeView.DataTemplates>
+      </TreeView>
+   
+    </SplitView.Pane>
+
+    
+    
+    
+    
+    <Grid ColumnDefinitions="* 4* *">
+
+      <Button Name="leftButton" VerticalAlignment="Center" Padding="20" Content="Prev" HorizontalAlignment="Center" Grid.Column="0"/>
+
+      <Carousel Name="CarouselImages" Items="{Binding ShowingImages}" Grid.Column="1">
+
+        <Carousel.ItemTemplate>
+
+          <DataTemplate>
+            
+            <Image Source="{Binding Image}" ToolTip.Tip="{Binding Path}" Height="210"/>
+            
+          </DataTemplate>
+
+
+        </Carousel.ItemTemplate>
+
+      </Carousel>
+      
+      <Button Name="rightButton" VerticalAlignment="Center" Padding="20" Content="Next" HorizontalAlignment="Center" Grid.Column="2"/>
+      
+    </Grid>
+
+  </SplitView>
+
+</Window>
